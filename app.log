@@ -1,0 +1,22 @@
+2025-04-21 10:13:42,205 - INFO - Encryption key successfully loaded from the file.
+2025-04-21 10:14:22,662 - INFO - Encryption key successfully loaded from the file.
+2025-04-21 10:17:27,266 - INFO - Received input string: aa
+2025-04-21 10:17:27,267 - INFO - Converted result: [1]
+2025-04-21 10:21:47,794 - INFO - A new encryption key has been generated and replaced.
+2025-04-21 10:21:47,802 - INFO - Encryption key successfully loaded from the file.
+2025-04-21 10:26:02,064 - INFO - A new encryption key has been generated and replaced.
+2025-04-21 10:26:02,071 - INFO - Encryption key successfully loaded from the file.
+2025-04-21 10:47:21,387 - INFO - Received input string: dz_a_aazzaaa
+2025-04-21 10:47:21,387 - INFO - Converted result: [27, 1, 29]
+2025-04-21 10:47:27,643 - INFO - Received input string: dz_a_aazzaaa
+2025-04-21 10:47:27,644 - INFO - Converted result: [27, 1, 29]
+2025-04-21 10:50:06,664 - INFO - A new encryption key has been generated and replaced.
+2025-04-21 10:50:06,673 - INFO - Encryption key successfully loaded from the file.
+2025-04-21 10:50:43,717 - INFO - Received input string: dz_a_aazzaaa
+2025-04-21 10:50:43,718 - INFO - Converted result: [27, 1, 29]
+2025-04-21 11:18:08,091 - INFO - A new encryption key has been generated and replaced.
+2025-04-21 11:18:08,099 - INFO - Encryption key successfully loaded from the file.
+2025-04-21 11:18:36,390 - INFO - Received input string: dz_a_aazzaaa
+2025-04-21 11:18:36,391 - INFO - Converted result: [26, 0, 30]
+2025-04-21 11:19:40,322 - INFO - Received input string: aa
+2025-04-21 11:19:40,322 - INFO - Converted result: [1]
