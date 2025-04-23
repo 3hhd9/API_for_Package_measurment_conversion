@@ -4,15 +4,15 @@ import logging
 from pymongo import MongoClient
 import os
 import json
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.primitives.asymmetric import rsa, padding as rsa_padding
+from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.backends import default_backend
 import base64
 
 # Initialize FastAPI app
 app = FastAPI()
 
-# Configure logging
+# Logging
 LOG_FILE = "app.log"
 logging.basicConfig(
     level=logging.INFO,
@@ -24,107 +24,108 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# MongoDB setup
+# MongoDB
 MONGO_URI = "mongodb://localhost:27017"
 client = MongoClient(MONGO_URI)
 db = client["measurement_conversion"]
 collection = db["history"]
 
-# Key file path
-KEY_FILE = "encryption_key.key"
+# File paths for RSA keys
+PRIVATE_KEY_FILE = "private_key.pem"
+PUBLIC_KEY_FILE = "public_key.pem"
 
-# Generate and replace the encryption key
-def generate_new_key():
-    with open(KEY_FILE, "wb") as key_file:
-        new_key = os.urandom(32)  # AES-256 key
-        key_file.write(new_key)
-        logger.info("New encryption key generated and saved.")
+# Generate RSA key pair if not already present
+def generate_key_pair():
+    # Generate private key
+    private_key = rsa.generate_private_key(
+        public_exponent=65537,
+        key_size=2048
+    )
+    # Save private key to file
+    with open(PRIVATE_KEY_FILE, "wb") as private_file:
+        private_file.write(
+            private_key.private_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PrivateFormat.PKCS8,
+                encryption_algorithm=serialization.NoEncryption()
+            )
+        )
+    # Generate public key
+    public_key = private_key.public_key()
+    # Save public key to file
+    with open(PUBLIC_KEY_FILE, "wb") as public_file:
+        public_file.write(
+            public_key.public_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PublicFormat.SubjectPublicKeyInfo
+            )
+        )
+    logger.info("RSA key pair generated and saved.")
 
-generate_new_key()
+if not os.path.exists(PRIVATE_KEY_FILE) or not os.path.exists(PUBLIC_KEY_FILE):
+    generate_key_pair()
 
-# Load encryption key
-with open(KEY_FILE, "rb") as key_file:
-    ENCRYPTION_KEY = key_file.read()
-logger.info("Encryption key successfully loaded.")
-
-# Mapping of letters to values
-alpha = {
-    "_": 0, "a": 1, "b": 2, "c": 3, "d": 4, "e": 5, "f": 6, "g": 7, "h": 8, "i": 9, "j": 10,
-    "k": 11, "l": 12, "m": 13, "n": 14, "o": 15, "p": 16, "q": 17, "r": 18, "s": 19,
-    "t": 20, "u": 21, "v": 22, "w": 23, "x": 24, "y": 25, "z": 26
-}
-
-# AES Encryption/Decryption
+# Encrypt data using the public key
 def encrypt_data(data: str) -> str:
-    iv = os.urandom(16)
-    backend = default_backend()
-    cipher = Cipher(algorithms.AES(ENCRYPTION_KEY), modes.CBC(iv), backend=backend)
-    encryptor = cipher.encryptor()
-    padder = padding.PKCS7(algorithms.AES.block_size).padder()
-    padded = padder.update(data.encode()) + padder.finalize()
-    encrypted = encryptor.update(padded) + encryptor.finalize()
-    return base64.b64encode(iv + encrypted).decode()
+    with open(PUBLIC_KEY_FILE, "rb") as public_file:
+        public_key = serialization.load_pem_public_key(public_file.read())
+    encrypted = public_key.encrypt(
+        data.encode(),
+        rsa_padding.OAEP(
+            mgf=rsa_padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
+    )
+    return base64.b64encode(encrypted).decode()
 
+# Decrypt data using the private key
 def decrypt_data(encrypted_data: str) -> str:
-    raw = base64.b64decode(encrypted_data.encode())  # Ensure input is encoded to bytes
-    iv = raw[:16]
-    encrypted = raw[16:]
-    backend = default_backend()
-    cipher = Cipher(algorithms.AES(ENCRYPTION_KEY), modes.CBC(iv), backend=backend)
-    decryptor = cipher.decryptor()
-    padded = decryptor.update(encrypted) + decryptor.finalize()
-    unpadder = padding.PKCS7(algorithms.AES.block_size).unpadder()
-    data = unpadder.update(padded) + unpadder.finalize()
-    return data.decode()
+    with open(PRIVATE_KEY_FILE, "rb") as private_file:
+        private_key = serialization.load_pem_private_key(private_file.read(), password=None)
+    decrypted = private_key.decrypt(
+        base64.b64decode(encrypted_data),
+        rsa_padding.OAEP(
+            mgf=rsa_padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
+    )
+    return decrypted.decode()
 
-# Parse measurements
-def parse_measurements(input_str: str) -> List[int]:
-    """
-    Parse measurement string into a list of total values for each package.
-    """
-    logger.info(f"Processing input string: {input_str}")
-    if not input_str:
-        return []
+# New string-to-values logic
+def string_to_values(s: str) -> List[int]:
+    def char_val(c: str) -> int:
+        c = c.lower()
+        return ord(c) - 96 if 'a' <= c <= 'z' else 0
 
-    results = []
+    slots = []
     i = 0
-
-    while i < len(input_str):
-        # Check if enough characters remain for a new package
-        if input_str[i] not in alpha:
-            raise ValueError(f"Invalid package size character: {input_str[i]}")
-        package_size = alpha[input_str[i]]
-        i += 1
-        package_total = 0
-        values_read = 0
-
-        while values_read < package_size and i < len(input_str):
-            current_value = 0
-            # Chain all consecutive z's and sum their value, then add the next non-z character
-            while i < len(input_str) and input_str[i] == 'z':
-                current_value += alpha['z']
+    while i < len(s):
+        if s[i].lower() == 'z':
+            slot = s[i]
+            i += 1
+            while slot and slot[-1].lower() == 'z' and i < len(s):
+                slot += s[i]
                 i += 1
-            if i < len(input_str):
-                current_value += alpha[input_str[i]]
-                i += 1
-            values_read += 1
-            package_total += current_value
+            slots.append(slot)
+        else:
+            slots.append(s[i])
+            i += 1
 
-        # Handle missing values
-        while values_read < package_size:
-            package_total += alpha['a']
-            values_read += 1
+    slot_vals = [sum(char_val(c) for c in slot) for slot in slots]
 
-        results.append(package_total)
-        logger.debug(f"Package total: {package_total}")
+    result = []
+    idx = 0
+    while idx < len(slot_vals):
+        count = slot_vals[idx]
+        portion = sum(slot_vals[idx + 1: idx + 1 + count])
+        result.append(portion)
+        idx += 1 + count
 
-        # If not enough characters for a new package, break
-        if i >= len(input_str):
-            break
+    return result
 
-    return results
-
-# File path to store the history
+# Local file
 LOCAL_FILE = "history.json"
 
 # Route to convert measurements
@@ -132,22 +133,18 @@ LOCAL_FILE = "history.json"
 def convert_measurements(input_string: str = Query(..., alias="input")):
     logger.info(f"Received input: {input_string}")
     try:
-        # Parse and encrypt the input/output
-        converted = parse_measurements(input_string)
+        converted = string_to_values(input_string)
         encrypted_input = encrypt_data(input_string)
         encrypted_output = encrypt_data(json.dumps(converted))
 
-        # Save to MongoDB
+        # MongoDB
         collection.insert_one({
             "input": encrypted_input,
             "output": encrypted_output
         })
 
-        # Save to local file
-        history_entry = {
-            "input": encrypted_input,
-            "output": encrypted_output
-        }
+        # Local file
+        history_entry = {"input": encrypted_input, "output": encrypted_output}
         if not os.path.exists(LOCAL_FILE):
             with open(LOCAL_FILE, "w") as file:
                 json.dump([history_entry], file, indent=4)
@@ -166,20 +163,11 @@ def convert_measurements(input_string: str = Query(..., alias="input")):
 # Route to retrieve history
 @app.get("/history")
 def get_history():
-    history = [
-        {
-            "input": "encrypted_input_string",
-            "output": "encrypted_output_string"
-        },
-        {
-            "input": "another_encrypted_input_string",
-            "output": "another_encrypted_output_string"
-        }
-    ]
+    history = []
     for record in collection.find():
         try:
-            decrypted_input = decrypt_data(record["input"])
-            decrypted_output = json.loads(decrypt_data(record["output"]))
+            decrypted_input = decrypt_data(record.get("input", ""))
+            decrypted_output = json.loads(decrypt_data(record.get("output", "{}")))
             history.append({
                 "input": decrypted_input,
                 "output": decrypted_output

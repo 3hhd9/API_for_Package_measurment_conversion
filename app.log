@@ -69,3 +69,149 @@
 2025-04-22 14:09:52,789 - WARNING - Failed to decrypt record: Invalid padding bytes.
 2025-04-22 14:09:52,790 - WARNING - Failed to decrypt record: Invalid padding bytes.
 2025-04-22 14:09:52,790 - WARNING - Failed to decrypt record: Invalid padding bytes.
+2025-04-22 14:57:03,653 - INFO - New encryption key generated and saved.
+2025-04-22 14:57:03,662 - INFO - Encryption key successfully loaded.
+2025-04-22 14:57:25,595 - INFO - Received input: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-22 14:57:25,596 - INFO - Processing input string: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-22 15:00:15,636 - INFO - Received input: abbcc
+2025-04-22 15:00:15,636 - INFO - Processing input string: abbcc
+2025-04-22 15:00:39,569 - INFO - Received input: dz_a_aazzaaa
+2025-04-22 15:00:39,569 - INFO - Processing input string: dz_a_aazzaaa
+2025-04-22 15:00:56,449 - INFO - Received input: a_
+2025-04-22 15:00:56,449 - INFO - Processing input string: a_
+2025-04-22 15:01:18,284 - INFO - Received input: abcdabcdab
+2025-04-22 15:01:18,284 - INFO - Processing input string: abcdabcdab
+2025-04-22 15:02:19,209 - INFO - Received input: zdaaaaaaaabaaaaaaaabaaaaaaaabbaa
+2025-04-22 15:02:19,209 - INFO - Processing input string: zdaaaaaaaabaaaaaaaabaaaaaaaabbaa
+2025-04-22 15:39:33,528 - INFO - New encryption key generated and saved.
+2025-04-22 15:39:33,536 - INFO - Encryption key successfully loaded.
+2025-04-22 15:40:11,025 - INFO - Received input: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-22 15:40:11,026 - INFO - Processing input string: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-22 15:40:52,888 - INFO - Received input: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-22 15:40:52,889 - INFO - Processing input string: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-22 15:40:56,973 - INFO - Received input: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-22 15:40:56,973 - INFO - Processing input string: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-22 15:43:22,015 - INFO - Received input: za_a_a_a_a_a_a_a_a_a_a_a_a_a_azaaa
+2025-04-22 15:43:22,015 - INFO - Processing input string: za_a_a_a_a_a_a_a_a_a_a_a_a_a_azaaa
+2025-04-22 15:44:13,046 - INFO - New encryption key generated and saved.
+2025-04-22 15:44:13,054 - INFO - Encryption key successfully loaded.
+2025-04-23 08:49:15,080 - INFO - New encryption key generated and saved.
+2025-04-23 08:49:15,088 - INFO - Encryption key successfully loaded.
+2025-04-23 09:30:12,938 - INFO - New encryption key generated and saved.
+2025-04-23 09:30:12,947 - INFO - Encryption key successfully loaded.
+2025-04-23 09:30:13,024 - INFO - Public and private keys generated and saved.
+2025-04-23 09:30:28,347 - INFO - New encryption key generated and saved.
+2025-04-23 09:30:28,355 - INFO - Encryption key successfully loaded.
+2025-04-23 09:31:18,730 - INFO - Received input: aa
+2025-04-23 09:31:18,731 - INFO - Processing input string: aa
+2025-04-23 09:48:16,848 - INFO - New encryption key generated and saved.
+2025-04-23 09:48:16,857 - INFO - Encryption key successfully loaded.
+2025-04-23 09:52:33,260 - INFO - New encryption key generated and saved.
+2025-04-23 09:52:33,269 - INFO - Encryption key successfully loaded.
+2025-04-23 09:57:44,531 - INFO - Received input: aa 
+2025-04-23 09:57:44,532 - INFO - Processing input string: aa 
+2025-04-23 09:57:44,533 - ERROR - Error: Invalid package size character:  
+2025-04-23 09:58:27,870 - INFO - Received input: aa 
+2025-04-23 09:58:27,870 - INFO - Processing input string: aa 
+2025-04-23 09:58:27,871 - ERROR - Error: Invalid package size character:  
+2025-04-23 09:59:24,712 - INFO - New encryption key generated and saved.
+2025-04-23 09:59:24,721 - INFO - Encryption key successfully loaded.
+2025-04-23 10:03:39,066 - INFO - New encryption key generated and saved.
+2025-04-23 10:03:39,074 - INFO - Encryption key successfully loaded.
+2025-04-23 10:04:53,789 - ERROR - Exception in callback BaseProactorEventLoop._start_serving.<locals>.loop() at C:\Program Files\Python313\Lib\asyncio\proactor_events.py:840
+handle: <Handle BaseProactorEventLoop._start_serving.<locals>.loop() at C:\Program Files\Python313\Lib\asyncio\proactor_events.py:840>
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\asyncio\proactor_events.py", line 855, in loop
+    self._make_socket_transport(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        conn, protocol,
+        ^^^^^^^^^^^^^^^
+        extra={'peername': addr}, server=server)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\asyncio\proactor_events.py", line 644, in _make_socket_transport
+    return _ProactorSocketTransport(self, sock, protocol, waiter,
+                                    extra, server)
+  File "C:\Program Files\Python313\Lib\asyncio\proactor_events.py", line 610, in __init__
+    super().__init__(loop, sock, protocol, waiter, extra, server)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\asyncio\proactor_events.py", line 189, in __init__
+    super().__init__(loop, sock, protocol, waiter, extra, server)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\asyncio\proactor_events.py", line 335, in __init__
+    super().__init__(*args, **kw)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\asyncio\proactor_events.py", line 66, in __init__
+    self._server._attach(self)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\Python313\Lib\asyncio\base_events.py", line 297, in _attach
+    assert self._sockets is not None
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+2025-04-23 10:04:53,852 - ERROR - Exception in callback _ProactorReadPipeTransport._loop_reading()
+handle: <Handle _ProactorReadPipeTransport._loop_reading()>
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\asyncio\proactor_events.py", line 325, in _loop_reading
+    self._data_received(data, length)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\asyncio\proactor_events.py", line 274, in _data_received
+    self._protocol.data_received(data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\CodeLine\Desktop\API_for_Package_measurment_conversion\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 172, in data_received
+    self.handle_events()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\CodeLine\Desktop\API_for_Package_measurment_conversion\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 181, in handle_events
+    self.send_400_response(msg)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\CodeLine\Desktop\API_for_Package_measurment_conversion\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 298, in send_400_response
+    output = self.conn.send(event)
+  File "C:\Users\CodeLine\Desktop\API_for_Package_measurment_conversion\.venv\Lib\site-packages\h11\_connection.py", line 512, in send
+    data_list = self.send_with_data_passthrough(event)
+  File "C:\Users\CodeLine\Desktop\API_for_Package_measurment_conversion\.venv\Lib\site-packages\h11\_connection.py", line 537, in send_with_data_passthrough
+    self._process_event(self.our_role, event)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\CodeLine\Desktop\API_for_Package_measurment_conversion\.venv\Lib\site-packages\h11\_connection.py", line 272, in _process_event
+    self._cstate.process_event(role, type(event), server_switch_event)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\CodeLine\Desktop\API_for_Package_measurment_conversion\.venv\Lib\site-packages\h11\_state.py", line 293, in process_event
+    self._fire_event_triggered_transitions(role, _event_type)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\CodeLine\Desktop\API_for_Package_measurment_conversion\.venv\Lib\site-packages\h11\_state.py", line 311, in _fire_event_triggered_transitions
+    raise LocalProtocolError(
+    ...<3 lines>...
+    ) from None
+h11._util.LocalProtocolError: can't handle event type Response when role=SERVER and state=CLOSED
+2025-04-23 10:05:11,247 - INFO - New encryption key generated and saved.
+2025-04-23 10:05:11,256 - INFO - Encryption key successfully loaded.
+2025-04-23 10:05:33,502 - INFO - Received input: aa
+2025-04-23 10:05:33,503 - INFO - Processing input string: aa
+2025-04-23 10:15:21,825 - INFO - Received input: aa
+2025-04-23 10:15:21,826 - INFO - Processing input string: aa
+2025-04-23 10:16:17,696 - INFO - Received input: ab
+2025-04-23 10:16:17,696 - INFO - Processing input string: ab
+2025-04-23 10:17:52,600 - INFO - Received input: aa
+2025-04-23 10:17:52,601 - INFO - Processing input string: aa
+2025-04-23 11:01:39,213 - INFO - Processing input: aa
+2025-04-23 11:02:55,156 - INFO - Processing input: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-23 11:03:52,868 - INFO - New encryption key generated and saved.
+2025-04-23 11:03:52,876 - INFO - Encryption key successfully loaded.
+2025-04-23 11:08:06,096 - INFO - New encryption key generated and saved.
+2025-04-23 11:08:06,105 - INFO - Encryption key successfully loaded.
+2025-04-23 11:08:55,700 - INFO - Processing input: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-23 11:09:14,386 - INFO - Received input: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-23 11:09:14,387 - INFO - Processing input string: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-23 11:10:17,632 - INFO - New encryption key generated and saved.
+2025-04-23 11:10:17,641 - INFO - Encryption key successfully loaded.
+2025-04-23 11:10:34,092 - INFO - Received input: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-23 11:10:34,093 - INFO - Processing input string: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-23 11:20:58,158 - INFO - New encryption key generated and saved.
+2025-04-23 11:20:58,172 - INFO - Encryption key successfully loaded.
+2025-04-23 11:23:52,109 - INFO - Received input: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_
+2025-04-23 11:24:38,479 - INFO - Received input: zza_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a_a__azaaa
+2025-04-23 11:26:45,561 - INFO - Received input: za_a_a_a_a_a_a_a_a_a_a_a_a_azaaa
+2025-04-23 11:39:28,761 - INFO - Received input: za_a_a_a_a_a_a_a_a_a_a_a_a_azaaa
