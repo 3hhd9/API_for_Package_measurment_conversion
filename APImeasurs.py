@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Query
 from typing import List
+from fastapi.middleware.cors import CORSMiddleware
 import logging
 from pymongo import MongoClient
 import os
@@ -11,6 +12,14 @@ import base64
 
 # Initialize FastAPI app
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Logging
 LOG_FILE = "app.log"
@@ -92,6 +101,45 @@ def decrypt_data(encrypted_data: str) -> str:
         )
     )
     return decrypted.decode()
+
+# Decrypt data in MongoDB
+def decrypt_mongo_data():
+    print("Decrypting data in MongoDB...")
+    for record in collection.find():
+        try:
+            decrypted_input = decrypt_data(record["input"])
+            decrypted_output = json.loads(decrypt_data(record["output"]))
+            print(f"Decrypted Record: Input: {decrypted_input}, Output: {decrypted_output}")
+        except Exception as e:
+            print(f"Failed to decrypt record: {e}")
+
+# Decrypt data in local storage
+def decrypt_local_data():
+    LOCAL_FILE = "history.json"
+    if not os.path.exists(LOCAL_FILE):
+        print("Local history file not found.")
+        return
+
+    print("Decrypting data in local storage...")
+    with open(LOCAL_FILE, "r") as file:
+        data = json.load(file)
+
+    decrypted_data = []
+    for entry in data:
+        try:
+            decrypted_input = decrypt_data(entry["input"])
+            decrypted_output = json.loads(decrypt_data(entry["output"]))
+            decrypted_data.append({
+                "input": decrypted_input,
+                "output": decrypted_output
+            })
+        except Exception as e:
+            print(f"Failed to decrypt entry: {e}")
+
+    # Save decrypted data back to the file
+    with open(LOCAL_FILE, "w") as file:
+        json.dump(decrypted_data, file, indent=4)
+    print("Decrypted data saved to local storage.")
 
 # New string-to-values logic
 def string_to_values(s: str) -> List[int]:
@@ -181,4 +229,6 @@ def get_history():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="192.168.100.6", port=8080)
+    decrypt_mongo_data()
+    decrypt_local_data()
 

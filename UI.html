@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Measurement Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f9f9f9;
+    }
+    .container {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.75rem 1.5rem;
+      margin: 0.3rem;
+      border: none;
+      border-radius: 1rem;
+      background-color: #007BFF;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #resultArea {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #e3f2fd;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      text-align: left;
+      color: #333;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.5rem;
+      }
+      button {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Measurement Converter</h1>
+    <input id="inputField" type="text" placeholder="Enter measurement input" />
+    <div>
+      <button onclick="convertMeasurement()">Convert</button>
+      <button onclick="showHistory()">Show History</button>
+      <button onclick="clearResult()">Clear</button>
+    </div>
+    <div id="resultArea"></div>
+  </div>
+
+  <script>
+    const baseURL = 'http://192.168.100.6:8080';
+
+    async function convertMeasurement() {
+      const input = document.getElementById('inputField').value;
+      const resultArea = document.getElementById('resultArea');
+      resultArea.innerHTML = 'Loading...';
+
+      if (!input.trim()) {
+        resultArea.innerHTML = '<div class="error">Error: Input cannot be empty.</div>';
+        return;
+      }
+
+      try {
+        const response = await fetch(`${baseURL}/convert-measurements?input=${encodeURIComponent(input)}`);
+        if (!response.ok) throw new Error('Conversion failed');
+        const data = await response.json();
+        if (data.converted) {
+          resultArea.innerHTML = '<strong>Converted Values:</strong><ul>' + data.converted.map(val => `<li>${val}</li>`).join('') + '</ul>';
+        } else {
+          throw new Error(data.error || 'Unexpected response format');
+        }
+      } catch (error) {
+        resultArea.innerHTML = `<div class="error">Error: ${error.message}. Please check your input or try again later.</div>`;
+      }
+    }
+
+    async function showHistory() {
+      const resultArea = document.getElementById('resultArea');
+      resultArea.innerHTML = 'Loading history...';
+
+      try {
+        const response = await fetch(`${baseURL}/history`);
+        if (!response.ok) throw new Error('Failed to fetch history');
+        const data = await response.json();
+        if (data.history) {
+          resultArea.innerHTML = '<strong>Conversion History:</strong><ul>' + data.history.map(entry => `
+            <li>
+              <strong>Input:</strong> ${entry.input}<br />
+              <strong>Output:</strong> ${entry.output.join(', ')}
+            </li>`).join('') + '</ul>';
+        } else {
+          throw new Error('Unexpected response format');
+        }
+      } catch (error) {
+        resultArea.innerHTML = `<div class="error">Error: ${error.message}. Cannot load history.</div>`;
+      }
+    }
+
+    function clearResult() {
+      document.getElementById('resultArea').innerHTML = ''; // Clear the result area
+      document.getElementById('inputField').value = ''; // Clear the input field
+    }
+  </script>
+</body>
+</html>
